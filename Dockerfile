@@ -25,6 +25,7 @@ WORKDIR /app
 # Copy only the necessary files from the build stage
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/src ./src
+COPY --from=builder /app/starinvoice-4021d756ca43.json ./starinvoice-4021d756ca43.json
 COPY --from=builder /app/package*.json ./
 
 # Copy database migrations
