@@ -16,8 +16,8 @@ export class UploadService {
 
   private storage = new Storage(
     {
-      keyFilename: './starinvoice-4021d756ca43.json',// path.join(__dirname, "../api-node-docker-4d09c33e8fdb.json"),
-      projectId: "starinvoice"
+      keyFilename: process.env.GCP_KEYFILE_PATH,// path.join(__dirname, "../api-node-docker-4d09c33e8fdb.json"),
+      projectId: process.env.GCP_PROJECT_ID || 'starinvoice',
     }
   );
   private bucket = this.storage.bucket(process.env.GCP_BUCKET_NAME || 'bank-ai-documents');
