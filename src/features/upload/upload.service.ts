@@ -1,5 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Storage } from '@google-cloud/storage';
+import { SecretManagerServiceClient } from '@google-cloud/secret-manager';
+import { ConfigService } from '@nestjs/config';
+
 import { PassThrough } from 'stream';
 import { UploadResponseDto } from './dto/upload.dto';
 
@@ -16,11 +19,11 @@ export class UploadService {
 
   private storage = new Storage(
     {
-      keyFilename: process.env.GCP_KEYFILE_PATH,// path.join(__dirname, "../api-node-docker-4d09c33e8fdb.json"),
-      projectId: process.env.GCP_PROJECT_ID || 'starinvoice',
+      keyFilename: process.env.GCS_KEYFILE_PATH,// path.join(__dirname, "../api-node-docker-4d09c33e8fdb.json"),
+      projectId: process.env.GCS_PROJECT_ID || 'starinvoice',
     }
   );
-  private bucket = this.storage.bucket(process.env.GCP_BUCKET_NAME || 'bank-ai-documents');
+  private bucket = this.storage.bucket(process.env.GCS_BUCKET_NAME || 'bank-ai-documents');
   // .setMetadata({
   //   //cacheControl: 'public, max-age=31536000',
   //   iamConfiguration: {
@@ -34,6 +37,7 @@ export class UploadService {
     //@Inject(UploadGateway)
     private readonly uploadUtils: UploadUtilsService,
     private readonly uploadGateway: UploadGateway,
+    private configService: ConfigService
   ) {}
 
   async uploadFile(file: Express.Multer.File): Promise<any> {

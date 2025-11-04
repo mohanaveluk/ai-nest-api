@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { UploadModule } from './features/upload/upload.module';
+import { CloudStorageModule } from './cloud-storage/cloud-storage.module';
 
 @Module({
   imports: [
@@ -11,7 +12,8 @@ import { UploadModule } from './features/upload/upload.module';
       //load: [databaseConfig, jwtConfig, adminConfig, googleCloudConfig, smtpConfig],
       isGlobal: true,
     }),
-    UploadModule
+    UploadModule,
+    CloudStorageModule
   ],
   controllers: [AppController],
   providers: [AppService],
